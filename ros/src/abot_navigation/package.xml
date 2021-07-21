@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+	<package format="2">
+	<name>abot_navigation</name>
+	<version>0.0.0</version>
+	<description>The abot_navigation package</description>
+
+	<maintainer email="gabbapeople@amperka.ru">gabbapeople</maintainer>
+	<license>TODO</license>
+
+	<buildtool_depend>catkin</buildtool_depend>
+
+	<exec_depend>amcl</exec_depend>
+	<exec_depend>map_server</exec_depend>
+	<exec_depend>move_base</exec_depend>
+
+	<export>
+	</export>
+</package>

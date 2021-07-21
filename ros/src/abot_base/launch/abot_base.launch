@@ -1,0 +1,6 @@
+<launch>
+	<node name="abot_base_node" pkg="abot_base" type="abot_base_node" output="screen">
+    	<param name="control_frequency" type="int" value="100"/>
+		<param name="max_wheel_angular_speed" type="double" value="18.0"/>
+	</node>
+</launch>
