@@ -1,0 +1,50 @@
+<launch>
+	<!-- Audio capture params -->
+	<arg name="device" default="plughw:1" />
+	<arg name="bitrate" default="160" />
+	<arg name="channels" default="1" />
+	<arg name="sample_rate" default="16000" />
+	<arg name="sample_format" default="S16LE" />
+	<arg name="dst" default="appsink" />
+	<arg name="format" default="wave" />
+	
+	<!-- Pocketsphinx test example params -->
+	<!-- <arg name="hmm" default="$(find abot_speech_to_text)/model/zero_ru_cont_8k_v3/zero_ru.cd_cont_4000" />
+	<arg name="dict" default= "$(find abot_speech_to_text)/config/test/test_dictionary.dic" />
+	<arg name="kws" default="$(find abot_speech_to_text)/config/test/test_kwslist.kwslist" />
+	<arg name="gram" default="$(find abot_speech_to_text)/config/test/test_gram" />
+	<arg name="grammar" default="robot_cmd" />
+	<arg name="rule" default="commands" />  -->
+
+	<!-- Pocketsphinx Abot params -->
+	<arg name="hmm" default="$(find abot_speech_to_text)/model/zero_ru_cont_8k_v3/zero_ru.cd_cont_4000" />
+	<arg name="dict" default= "$(find abot_speech_to_text)/config/abot_dictionary.dic" />
+	<arg name="kws" default="$(find abot_speech_to_text)/config/abot_kwslist.kwslist" />
+	<arg name="gram" default="$(find abot_speech_to_text)/config/abot_gram" />
+	<arg name="grammar" default="robot_cmd" />
+	<arg name="rule" default="all_commands" />
+
+	<node name="asr_control" pkg="abot_speech_to_text" type="asr_control.py" output="screen" >
+		<param name="hmm" value="$(arg hmm)" />
+		<param name="dict" value="$(arg dict)" />
+		<param name="gram" value="$(arg gram)" />
+		<param name="grammar" value="$(arg grammar)" />
+		<param name="rule" value="$(arg rule)" />
+	</node>
+
+	<node name="kws_control" pkg="abot_speech_to_text" type="kws_control.py" output="screen" >
+		<param name="hmm" value="$(arg hmm)" />
+		<param name="dict" value="$(arg dict)" />
+		<param name="kws" value="$(arg kws)" />
+	</node>
+
+	<node name="audio_capture" pkg="audio_capture" type="audio_capture" output="screen" >
+		<param name="bitrate" value="$(arg bitrate)" />
+		<param name="device" value="$(arg device)" />
+		<param name="channels" value="$(arg channels)" />
+		<param name="sample_rate" value="$(arg sample_rate)" />
+		<param name="sample_format" value="$(arg sample_format)" />
+		<param name="format" value="$(arg format)" />
+		<param name="dst" value="$(arg dst)" />
+	</node>
+</launch>

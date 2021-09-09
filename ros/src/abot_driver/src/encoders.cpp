@@ -1,5 +1,5 @@
 
-#include "encoder_wiring_pi.h"
+#include "encoder_wiring_pi.hpp"
 #include <std_msgs/Float64.h>
 #include <chrono>
 
@@ -10,75 +10,75 @@ public:
     EncodersPair(double update_rate);
 
 private:
-    ros::NodeHandle _node;
+    ros::NodeHandle node;
 
-    ros::Publisher _left_wheel_angle_pub;
-    ros::Publisher _right_wheel_angle_pub;
-    ros::Publisher _left_wheel_velocity_pub;
-    ros::Publisher _right_wheel_velocity_pub;
+    ros::Publisher left_wheel_angle_pub;
+    ros::Publisher right_wheel_angle_pub;
+    ros::Publisher left_wheel_velocity_pub;
+    ros::Publisher right_wheel_velocity_pub;
 
-    ros::Timer _encoders_timer;
+    ros::Timer encoders_timer;
 
-    std_msgs::Float64 _left_wheel_angle_msg;
-    std_msgs::Float64 _right_wheel_angle_msg;
-    std_msgs::Float64 _left_wheel_velocity_msg;
-    std_msgs::Float64 _right_wheel_velocity_msg;
+    std_msgs::Float64 left_wheel_angle_msg;
+    std_msgs::Float64 right_wheel_angle_msg;
+    std_msgs::Float64 left_wheel_velocity_msg;
+    std_msgs::Float64 right_wheel_velocity_msg;
 
-    EncoderWiringPi _encoder_left;
-    EncoderWiringPi _encoder_right;
+    EncoderWiringPi encoder_left;
+    EncoderWiringPi encoder_right;
 
-    double _left_wheel_angle;
-    double _right_wheel_angle;
-    double _left_wheel_velocity;
-    double _right_wheel_velocity;
-    double _left_wheel_position;
-    double _right_wheel_position;
+    double left_wheel_angle;
+    double right_wheel_angle;
+    double left_wheel_velocity;
+    double right_wheel_velocity;
+    double left_wheel_position;
+    double right_wheel_position;
 
-    time_source::time_point _last_time;
+    time_source::time_point last_time;
 
     void encodersCallback(const ros::TimerEvent& event);
 };
 
 EncodersPair::EncodersPair(double update_rate) :
-    _encoder_left(ENCODER_1_PIN_A, ENCODER_1_PIN_B, &EncoderWiringPiISR::encoderISR1, &EncoderWiringPiISR::encoder_position_1),
-    _encoder_right(ENCODER_2_PIN_A, ENCODER_2_PIN_B, &EncoderWiringPiISR::encoderISR2, &EncoderWiringPiISR::encoder_position_2) {
-    _left_wheel_angle_pub = _node.advertise<std_msgs::Float64>("/abot/left_wheel/angle", 1);
-    _right_wheel_angle_pub = _node.advertise<std_msgs::Float64>("/abot/right_wheel/angle", 1);
-    _left_wheel_velocity_pub = _node.advertise<std_msgs::Float64>("/abot/left_wheel/current_velocity", 1);
-    _right_wheel_velocity_pub = _node.advertise<std_msgs::Float64>("/abot/right_wheel/current_velocity", 1);
+    encoder_left(ENCODER_1_PIN_A, ENCODER_1_PIN_B, &EncoderWiringPiISR::encoderISR1, &EncoderWiringPiISR::encoderPosition1),
+    encoder_right(ENCODER_2_PIN_A, ENCODER_2_PIN_B, &EncoderWiringPiISR::encoderISR2, &EncoderWiringPiISR::encoderPosition2) {
+    left_wheel_angle_pub = node.advertise<std_msgs::Float64>("/abot/left_wheel/angle", 1);
+    right_wheel_angle_pub = node.advertise<std_msgs::Float64>("/abot/right_wheel/angle", 1);
+    left_wheel_velocity_pub = node.advertise<std_msgs::Float64>("/abot/left_wheel/current_velocity", 1);
+    right_wheel_velocity_pub = node.advertise<std_msgs::Float64>("/abot/right_wheel/current_velocity", 1);
    
-    _encoders_timer = _node.createTimer(ros::Duration(update_rate), &EncodersPair::encodersCallback, this);
+    encoders_timer = node.createTimer(ros::Duration(update_rate), &EncodersPair::encodersCallback, this);
 }
 
 void EncodersPair::encodersCallback(const ros::TimerEvent& event) {
     time_source::time_point this_time = time_source::now();
-    boost::chrono::duration<double> elapsed_duration = this_time - _last_time;
+    boost::chrono::duration<double> elapsed_duration = this_time - last_time;
     ros::Duration elapsed(elapsed_duration.count());
-    _last_time = this_time;
+    last_time = this_time;
 
-    _left_wheel_angle = -1 * _encoder_left.getAngle();
-    _right_wheel_angle = 1 * _encoder_right.getAngle();
+    left_wheel_angle = -1 * encoder_left.getAngle();
+    right_wheel_angle = 1 * encoder_right.getAngle();
 
-    _left_wheel_angle_msg.data = _left_wheel_angle;
-    _right_wheel_angle_msg.data = _right_wheel_angle;
+    left_wheel_angle_msg.data = left_wheel_angle;
+    right_wheel_angle_msg.data = right_wheel_angle;
 
-    _left_wheel_angle_pub.publish(_left_wheel_angle_msg);
-    _right_wheel_angle_pub.publish(_right_wheel_angle_msg);
+    left_wheel_angle_pub.publish(left_wheel_angle_msg);
+    right_wheel_angle_pub.publish(right_wheel_angle_msg);
 
-    double delta_left_wheel = _left_wheel_angle - _left_wheel_position;
-    double delta_right_wheel = _right_wheel_angle - _right_wheel_position;
+    double delta_left_wheel = left_wheel_angle - left_wheel_position;
+    double delta_right_wheel = right_wheel_angle - right_wheel_position;
 
-    _left_wheel_position += delta_left_wheel;
-    _left_wheel_velocity = delta_left_wheel / elapsed.toSec();
+    left_wheel_position += delta_left_wheel;
+    left_wheel_velocity = delta_left_wheel / elapsed.toSec();
 
-    _right_wheel_position += delta_right_wheel;
-    _right_wheel_velocity = delta_right_wheel / elapsed.toSec();
+    right_wheel_position += delta_right_wheel;
+    right_wheel_velocity = delta_right_wheel / elapsed.toSec();
  
-    _left_wheel_velocity_msg.data = _left_wheel_velocity;
-    _right_wheel_velocity_msg.data = _right_wheel_velocity;
+    left_wheel_velocity_msg.data = left_wheel_velocity;
+    right_wheel_velocity_msg.data = right_wheel_velocity;
 
-    _left_wheel_velocity_pub.publish(_left_wheel_velocity_msg);
-    _right_wheel_velocity_pub.publish(_right_wheel_velocity_msg);
+    left_wheel_velocity_pub.publish(left_wheel_velocity_msg);
+    right_wheel_velocity_pub.publish(right_wheel_velocity_msg);
 }
 
 int main(int argc, char** argv) {

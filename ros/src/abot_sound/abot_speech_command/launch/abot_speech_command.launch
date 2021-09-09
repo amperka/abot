@@ -1,0 +1,7 @@
+<launch>
+	<group ns="/abot" >
+		<node name="vc_get_battery_state" pkg="abot_speech_command" type="vc_get_battery_state" output="screen" />
+		<node name="vc_get_system_time" pkg="abot_speech_command" type="vc_get_system_time" output="screen" />
+		<node name="vc_set_navigation_goal" pkg="abot_speech_command" type="vc_set_navigation_goal" output="screen" />
+	</group>
+</launch>

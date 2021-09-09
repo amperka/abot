@@ -1,0 +1,20 @@
+<launch>
+	<!-- Audio output volume -->
+	<arg name="volume" default="1.0" />
+	<!-- AWS Polly TTS params -->
+	<arg name="aws_speech_sound_file_path" default="$(find abot_text_to_speech)/sounds/aws_polly/speech.ogg" />
+	<arg name="aws_access_key_id" default="AKIARDO6WTHWTH5VDA7F" />
+	<arg name="aws_secret_access_key" default="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" />
+	<arg name="aws_region_name" default="us-west-2" />
+	<arg name="aws_polly_voice_id" default="Tatyana" />
+
+	<!-- AWS Polly TTS node -->
+	<node name="aws_polly_tts" pkg="abot_text_to_speech" type="aws_polly_tts.py" output="screen" >
+		<param name="volume" value="$(arg volume)" />
+		<param name="aws_speech_sound_file_path" value="$(arg aws_speech_sound_file_path)" />
+		<param name="aws_access_key_id" value="$(arg aws_access_key_id)" />
+		<param name="aws_secret_access_key" value="$(arg aws_secret_access_key)" />
+		<param name="aws_region_name" value="$(arg aws_region_name)" />
+		<param name="aws_polly_voice_id" value="$(arg aws_polly_voice_id)" />	
+	</node>
+</launch>

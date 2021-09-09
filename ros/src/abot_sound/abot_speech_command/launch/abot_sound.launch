@@ -1,0 +1,5 @@
+<launch>
+	<include file="$(find abot_speech_to_text)/launch/abot_speech_to_text.launch" />
+	<include file="$(find abot_text_to_speech)/launch/abot_text_to_speech.launch" />
+	<include file="$(find abot_speech_command)/launch/abot_speech_command.launch" />
+</launch>

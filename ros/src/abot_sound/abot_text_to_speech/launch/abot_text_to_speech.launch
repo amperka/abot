@@ -1,0 +1,15 @@
+<launch>
+	<!-- Audio play params -->
+	<arg name="device" default="plughw:2" />
+	<!-- Audio play ROS node -->
+	<node name="soundplay_node" pkg="sound_play" type="soundplay_node.py" output="screen" >
+		<param name="device" value="$(arg device)" />
+	</node>
+
+	<!-- AWS Polly TTS -->
+	<!-- <include file="$(find abot_text_to_speech)/launch/aws_polly_tts.launch" /> -->
+	<!-- Festival TTS -->
+	<!-- <include file="$(find abot_text_to_speech)/launch/festvox_tts.launch" /> -->
+	<!-- RHVoice TTS -->
+	<include file="$(find abot_text_to_speech)/launch/rhvoice_tts.launch" />
+</launch>

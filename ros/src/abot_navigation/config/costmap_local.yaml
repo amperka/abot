@@ -5,8 +5,8 @@ update_frequency: 10.0
 publish_frequency: 10.0
 transform_tolerance: 0.5
 
-width: 3.0
-height: 3.0
+width: 2.0
+height: 2.0
 
 cost_scaling_factor: 1.0
 

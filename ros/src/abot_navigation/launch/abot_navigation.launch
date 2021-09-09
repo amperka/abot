@@ -1,6 +1,13 @@
 <launch>
-	<arg name="map_file" default="$(find abot_slam)/maps/map.yaml"/>
-	<node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+	<!-- Real map -->
+	<arg name="map_file" default="$(find abot_slam)/maps/map2_original.yaml" />
+	<node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)" />
+
+	<!-- Fake map -->
+	<arg name="fake_map_file" default="$(find abot_slam)/maps/map2_fake.yaml" />
+	<node pkg="map_server" name="map_server" type="map_server" ns="/abot_fake_map" args="$(arg fake_map_file)" />
+	<node pkg="tf" type="static_transform_publisher" name="fake_map_broadcaster" args="1 0 0 0 0 0 1 /map /abot_fake_map/map 100" />
+
 	<include file="$(find abot_navigation)/launch/amcl.launch" />
-	<include file="$(find abot_navigation)/launch/move_base.launch"/>
+	<include file="$(find abot_navigation)/launch/move_base.launch" />
 </launch>

@@ -1,0 +1,15 @@
+#JSGF V1.0;
+
+grammar robot_cmd;
+
+public <commands> = <command> ;
+
+<command> = <command_1> | <command_2> ;
+
+<command_1> = <c1_action> (( <c1_subject_color> светодиод ) | все светодиоды ) ;
+<c1_action> = включи | выключи ;
+<c1_subject_color> = зеленый | красный ;
+
+<command_2> = установи яркость <c2_subject_color> светодиода <c2_brightness_percent> ;
+<c2_subject_color> = зеленого | красного ;
+<c2_brightness_percent> = ноль | десять | двадцать | тридцать | сорок | пятьдесят | шестьдесят | семьдесят | восемьдесят | девяносто | сто ;

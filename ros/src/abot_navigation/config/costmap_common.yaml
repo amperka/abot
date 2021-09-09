@@ -1,4 +1,4 @@
-robot_radius: 0.10
+robot_radius: 0.1
 
 robot_base_frame: base_footprint
 
@@ -22,4 +22,7 @@ obstacles:
     inf_is_valid: true
 
 inflation:
-  inflation_radius: 1.0
+  inflation_radius: 2.0
+
+fake_walls:
+  map_topic: /abot_fake_map/map

@@ -1,6 +1,6 @@
 
-#ifndef ABOT_HARDWARE_INTERFACE_H_
-#define ABOT_HARDWARE_INTERFACE_H_
+#ifndef ABOT_HARDWARE_INTERFACE_HPP_
+#define ABOT_HARDWARE_INTERFACE_HPP_
 
 #include <boost/assign/list_of.hpp>
 #include <sstream>
@@ -134,4 +134,4 @@ void AbotHardwareInterface::limitDifferentialSpeed(double& diff_speed_left_side,
     }
 }
 
-#endif // ABOT_HARDWARE_INTERFACE_H_
+#endif // ABOT_HARDWARE_INTERFACE_HPP_

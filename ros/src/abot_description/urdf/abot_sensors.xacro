@@ -23,7 +23,7 @@
 	</collision>
 	</link>
 	<joint name="lidar_to_base" type="fixed">
-		<origin xyz="-0.01 0 0.1419" rpy="0 0 ${PI}"/>
+		<origin xyz="-0.01 0 0.1849" rpy="0 0 ${PI}"/>
 		<parent link="abot_base"/>
 		<child link="abot_lidar"/>
 		<axis xyz="0 0 0"/>

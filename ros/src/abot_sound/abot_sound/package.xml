@@ -1,0 +1,18 @@
+<package>
+	<name>abot_sound</name>
+	<version>0.0.0</version>
+	<description>The abot_sound meta package</description>
+
+	<maintainer email="gabbapeople@amperka.ru">gabbapeople</maintainer>
+	<license>TODO</license>
+
+	<buildtool_depend>catkin</buildtool_depend>
+
+	<run_depend>abot_speech_to_text</run_depend>
+	<run_depend>abot_text_to_speech</run_depend>
+	<run_depend>abot_speech_command</run_depend>
+
+	<export>
+		<metapackage/>
+	</export>
+</package>

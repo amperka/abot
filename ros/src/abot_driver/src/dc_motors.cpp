@@ -1,11 +1,11 @@
 
-#include "dc_motor_wiring_pi.h"
+#include "dc_motor_wiring_pi.hpp"
 #include <std_msgs/Float64.h>
 
-constexpr uint8_t MOTOR_1_PIN_D = 4;        // Wiring pi 7 = BCM 4
-constexpr uint8_t MOTOR_1_PIN_E = 18;       // Wiring pi 1 = BCM 18
-constexpr uint8_t MOTOR_2_PIN_D = 12;       // Wiring pi 26 = BCM 12
-constexpr uint8_t MOTOR_2_PIN_E = 13;       // Wiring pi 23 = BCM 13
+#define MOTOR_1_PIN_D 4     // Wiring pi 7 = BCM 4
+#define MOTOR_1_PIN_E 18    // Wiring pi 1 = BCM 18
+#define MOTOR_2_PIN_D 12    // Wiring pi 26 = BCM 12
+#define MOTOR_2_PIN_E 13    // Wiring pi 23 = BCM 13
 
 DCMotorWiringPi left_dc_motor(MOTOR_1_PIN_D, MOTOR_1_PIN_E);
 DCMotorWiringPi right_dc_motor(MOTOR_2_PIN_D, MOTOR_2_PIN_E);

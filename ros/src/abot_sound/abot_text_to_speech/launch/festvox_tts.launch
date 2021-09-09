@@ -1,0 +1,12 @@
+<launch>
+	<!-- Audio output volume -->
+	<arg name="volume" default="1.0" />
+	<!-- Festival TTS params -->
+	<arg name="voice" default="voice_msu_ru_nsh_clunits" />
+
+	<!-- Festival TTS node -->
+	<node name="festvox_tts" pkg="abot_text_to_speech" type="festvox_tts.py" output="screen" >
+		<param name="volume" value="$(arg volume)" />
+		<param name="voice" value="$(arg voice)" />
+	</node>
+</launch>

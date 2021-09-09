@@ -11,9 +11,9 @@
 	<!-- abot_base -->
 	<link name="abot_base">
 		<inertial>
-			<origin xyz="-0.020033 -0.0011051 0.056486" rpy="0 0 0"/>
-			<mass value="0.54627"/>
-			<inertia ixx="0.00061681" ixy="-1.7116E-06" ixz="-1.1044E-05" iyy="0.00061911" iyz="-8.1361E-09" izz="0.0011295"/>
+			<origin xyz="-0.017258 -0.00044491 0.079113" rpy="0 0 0"/>
+			<mass value="0.71798"/>
+			<inertia ixx="0.00077488" ixy="-3.248E-06" ixz="-9.2329E-06" iyy="0.00075836" iyz="2.2456E-06" izz="0.0014158"/>
 		</inertial>
 		<visual>
 			<origin xyz="0 0 0" rpy="0 0 0" />

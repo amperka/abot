@@ -1,0 +1,17 @@
+#JSGF V1.0;
+
+grammar robot_cmd;
+
+public <all_commands> = <state> | <command> ;
+
+<state> = <state_1> | <state_2> | <state_3> ;
+<state_1> = сколько времени | который час ;
+<state_2> = текущая дата | сегодняшнее число ;
+<state_3> = заряд ( батареи | аккумулятора ) [ подробно ] ;
+
+<command> = <command_1> | <command_2> | <command_3> | <command_4> | <command_5> ;
+<command_1> = едь ( к виктору | к михаилу | к антону | домой ) ;
+<command_2> = разворот ;
+<command_3> = поворот влево | поворот вправо ;
+<command_4> = движение вперёд на ( метр | пол метра );
+<command_5> = движение назад на ( метр | пол метра );

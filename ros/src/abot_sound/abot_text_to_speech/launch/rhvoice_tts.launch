@@ -1,0 +1,15 @@
+<launch>
+	<!-- Audio output volume -->
+	<arg name="volume" default="1.0" />
+	<!-- RHVoice TTS params -->
+	<arg name="rhvoice_speech_sound_file_path" default="$(find abot_text_to_speech)/sounds/rhvoice/speech.wav" />
+	<arg name="rhvoice_voice" default="Anna+Clb" />
+	<!-- Russian voices: Aleksandr+Alan Anna+Clb Elena+stl Irina+stl -->
+
+	<!-- RHVoice TTS node -->
+	<node name="rhvoice_tts" pkg="abot_text_to_speech" type="rhvoice_tts.py" output="screen" >
+		<param name="volume" value="$(arg volume)" />
+		<param name="rhvoice_speech_sound_file_path" value="$(arg rhvoice_speech_sound_file_path)" />
+		<param name="rhvoice_voice" value="$(arg rhvoice_voice)" />
+	</node>
+</launch>
