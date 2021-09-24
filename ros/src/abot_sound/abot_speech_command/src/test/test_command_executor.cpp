@@ -1,9 +1,9 @@
-#include <string>
-#include <vector>
+#include <GpioExpanderPi.h>
 #include <ros/ros.h>
 #include <std_msgs/String.h>
+#include <string>
+#include <vector>
 #include <wiringPi.h>
-#include <GpioExpanderPi.h>
 
 constexpr uint8_t EXPANDER_GREEN_LED_PIN = 0;
 constexpr uint8_t EXPANDER_RED_LED_PIN = 1;
@@ -28,7 +28,7 @@ const std::vector<std::string> VOICE_COMMANDS = {
 	"установи яркость зеленого светодиода восемьдесят",
 	"установи яркость зеленого светодиода девяносто",
 	"установи яркость зеленого светодиода сто",
-	
+
 	"установи яркость красного светодиода ноль",
 	"установи яркость красного светодиода десять",
 	"установи яркость красного светодиода двадцать",
@@ -45,6 +45,7 @@ const std::vector<std::string> VOICE_COMMANDS = {
 class TestCommandExecutor {
 public:
 	TestCommandExecutor();
+
 private:
 	ros::NodeHandle _node;
 	ros::Subscriber _grammar_sub;
@@ -68,7 +69,7 @@ TestCommandExecutor::TestCommandExecutor() {
 void TestCommandExecutor::grammarCallback(const std_msgs::String::ConstPtr& msg) {
 	std::string grammar_string = msg->data.c_str();
 	uint8_t total_commands = VOICE_COMMANDS.size();
-	
+
 	for (uint8_t i = 0; i < total_commands; i++)
 		if (grammar_string == VOICE_COMMANDS[i])
 			executeCommand(i);
@@ -102,7 +103,7 @@ void TestCommandExecutor::executeCommand(uint8_t command_number) {
 	}
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
 	ros::init(argc, argv, "test_command_executor");
 	TestCommandExecutor testCommandExecutor;
 	ROS_INFO("Test Command Executor node: Start");

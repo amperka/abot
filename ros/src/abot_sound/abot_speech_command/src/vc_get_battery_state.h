@@ -1,11 +1,11 @@
 #ifndef VC_GET_BATTERY_STATE_H_
 #define VC_GET_BATTERY_STATE_H_
 
+#include <GpioExpanderPi.h>
 #include <ros/ros.h>
 #include <std_msgs/String.h>
 #include <string>
 #include <vector>
-#include <GpioExpanderPi.h>
 
 const std::vector<std::string> VOICE_COMMANDS_GET_BATTERY_STATE = {
 	"заряд батареи",
@@ -24,6 +24,7 @@ constexpr uint8_t GPIO_EXPANDER_DIVIDER_PIN = 7;
 class VCGetBatteryState {
 public:
 	VCGetBatteryState(GpioExpanderPi* expander);
+
 private:
 	ros::NodeHandle _node;
 	ros::Subscriber _stt_sub;
@@ -64,11 +65,13 @@ void VCGetBatteryState::getVoltage() {
 	uint16_t analog_value = _expander->analogRead(GPIO_EXPANDER_DIVIDER_PIN);
 	// printf("%d\n",analog_value);
 
-	float input_voltage = V_REF / 4095.0 * analog_value;	
+	float input_voltage = V_REF / 4095.0 * analog_value;
 	_battery_voltage = input_voltage / R_DIVIDER;
 
-	if (_battery_voltage < V_BATTERY_MIN) _battery_voltage = V_BATTERY_MIN;
-	if (_battery_voltage > V_BATTERY_MAX) _battery_voltage = V_BATTERY_MAX;
+	if (_battery_voltage < V_BATTERY_MIN)
+		_battery_voltage = V_BATTERY_MIN;
+	if (_battery_voltage > V_BATTERY_MAX)
+		_battery_voltage = V_BATTERY_MAX;
 
 	_battery_percentage = (_battery_voltage - V_BATTERY_MIN) / V_BATTERY_DIF * 100;
 }

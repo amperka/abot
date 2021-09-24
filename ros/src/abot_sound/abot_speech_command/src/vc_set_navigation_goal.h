@@ -1,10 +1,10 @@
 #ifndef VC_SET_NAVIGATION_GOAL_H_
 #define VC_SET_NAVIGATION_GOAL_H_
 
+#include <actionlib/client/simple_action_client.h>
+#include <move_base_msgs/MoveBaseAction.h>
 #include <ros/ros.h>
 #include <std_msgs/String.h>
-#include <move_base_msgs/MoveBaseAction.h>
-#include <actionlib/client/simple_action_client.h>
 #include <string>
 #include <vector>
 
@@ -22,22 +22,23 @@ const std::vector<std::string> VOICE_COMMANDS_SET_NAVIGATION_GOAL = {
 	"движение назад на метр",
 };
 
-constexpr double POSE_HOME[7] = {0.042, -0.013, 0.018, 0.000, 0.000, 0.031, 1.000};
-constexpr double POSE_MIKHAIL[7] = {-1.651, 6.007, 0.018, 0.000, 0.000, 0.675, 0.738};
-constexpr double POSE_VICTOR[7] = {-0.978, -4.205, 0.018, 0.000, 0.000, 0.023, 1.000};
-constexpr double POSE_ANTON[7] = {12.615, -0.322, 0.018, 0.000, 0.000, 0.728, 0.685};
+constexpr double POSE_HOME[7] = { 0.042, -0.013, 0.018, 0.000, 0.000, 0.031, 1.000 };
+constexpr double POSE_MIKHAIL[7] = { -1.651, 6.007, 0.018, 0.000, 0.000, 0.675, 0.738 };
+constexpr double POSE_VICTOR[7] = { -0.978, -4.205, 0.018, 0.000, 0.000, 0.023, 1.000 };
+constexpr double POSE_ANTON[7] = { 12.615, -0.322, 0.018, 0.000, 0.000, 0.728, 0.685 };
 
 typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
 class VCSetNavigationGoal {
 public:
 	VCSetNavigationGoal();
+
 private:
 	ros::NodeHandle _node;
 	ros::Subscriber _stt_sub;
 	ros::Publisher _tts_pub;
 
-	MoveBaseClient _ac{"/move_base", true};
+	MoveBaseClient _ac { "/move_base", true };
 
 	void sendGoalMsg(const std::string frame_id, const double parameters[7]);
 
@@ -73,64 +74,54 @@ void VCSetNavigationGoal::grammarCallback(const std_msgs::String::ConstPtr& text
 		answer_msg.data = "Еду домой!";
 		_tts_pub.publish(answer_msg);
 		sendGoalMsg("map", POSE_HOME);
-	}
-	else if (grammar_string == VOICE_COMMANDS_SET_NAVIGATION_GOAL[1]) {
+	} else if (grammar_string == VOICE_COMMANDS_SET_NAVIGATION_GOAL[1]) {
 		answer_msg.data = "Еду к Михаилу!";
 		_tts_pub.publish(answer_msg);
 		sendGoalMsg("map", POSE_MIKHAIL);
-	}
-	else if (grammar_string == VOICE_COMMANDS_SET_NAVIGATION_GOAL[2]) {
+	} else if (grammar_string == VOICE_COMMANDS_SET_NAVIGATION_GOAL[2]) {
 		answer_msg.data = "Еду к Виктору!";
 		_tts_pub.publish(answer_msg);
 		sendGoalMsg("map", POSE_VICTOR);
-	}
-	else if (grammar_string == VOICE_COMMANDS_SET_NAVIGATION_GOAL[3]) {
+	} else if (grammar_string == VOICE_COMMANDS_SET_NAVIGATION_GOAL[3]) {
 		answer_msg.data = "Еду к Антону!";
 		_tts_pub.publish(answer_msg);
 		sendGoalMsg("map", POSE_ANTON);
-	}
-	else if (grammar_string == VOICE_COMMANDS_SET_NAVIGATION_GOAL[4]) {
+	} else if (grammar_string == VOICE_COMMANDS_SET_NAVIGATION_GOAL[4]) {
 		answer_msg.data = "Выполняю разворот на месте!";
 		_tts_pub.publish(answer_msg);
-		double params[7] = {0, 0, 0, 0, 0, 1, 0};
+		double params[7] = { 0, 0, 0, 0, 0, 1, 0 };
 		sendGoalMsg("base_link", params);
-	}
-	else if (grammar_string == VOICE_COMMANDS_SET_NAVIGATION_GOAL[5]) {
+	} else if (grammar_string == VOICE_COMMANDS_SET_NAVIGATION_GOAL[5]) {
 		answer_msg.data = "Выполняю поворот влево!";
 		_tts_pub.publish(answer_msg);
-		double params[7] = {0, 0, 0, 0, 0, 0.707, 0.707};
+		double params[7] = { 0, 0, 0, 0, 0, 0.707, 0.707 };
 		sendGoalMsg("base_link", params);
-	}
-	else if (grammar_string == VOICE_COMMANDS_SET_NAVIGATION_GOAL[6]) {
+	} else if (grammar_string == VOICE_COMMANDS_SET_NAVIGATION_GOAL[6]) {
 		answer_msg.data = "Выполняю поворот вправо!";
 		_tts_pub.publish(answer_msg);
-		double params[7] = {0, 0, 0, 0, 0, -0.707, 0.707};
+		double params[7] = { 0, 0, 0, 0, 0, -0.707, 0.707 };
 		sendGoalMsg("base_link", params);
-	}
-	else if (grammar_string == VOICE_COMMANDS_SET_NAVIGATION_GOAL[7]) {
+	} else if (grammar_string == VOICE_COMMANDS_SET_NAVIGATION_GOAL[7]) {
 		answer_msg.data = "Выполняю!";
 		_tts_pub.publish(answer_msg);
-		double params[7] = {0.5, 0, 0, 0, 0, 0, 1};
+		double params[7] = { 0.5, 0, 0, 0, 0, 0, 1 };
 		sendGoalMsg("base_link", params);
-	}
-	else if (grammar_string == VOICE_COMMANDS_SET_NAVIGATION_GOAL[8]) {
+	} else if (grammar_string == VOICE_COMMANDS_SET_NAVIGATION_GOAL[8]) {
 		answer_msg.data = "Выполняю!";
 		_tts_pub.publish(answer_msg);
-		double params[7] = {1.0, 0, 0, 0, 0, 0, 1};
+		double params[7] = { 1.0, 0, 0, 0, 0, 0, 1 };
 		sendGoalMsg("base_link", params);
-	}
-	else if (grammar_string == VOICE_COMMANDS_SET_NAVIGATION_GOAL[9]) {
+	} else if (grammar_string == VOICE_COMMANDS_SET_NAVIGATION_GOAL[9]) {
 		answer_msg.data = "Выполняю!";
 		_tts_pub.publish(answer_msg);
-		double params[7] = {-0.5, 0, 0, 0, 0, 0, 1};
+		double params[7] = { -0.5, 0, 0, 0, 0, 0, 1 };
 		sendGoalMsg("base_link", params);
-	}
-	else if (grammar_string == VOICE_COMMANDS_SET_NAVIGATION_GOAL[10]) {
+	} else if (grammar_string == VOICE_COMMANDS_SET_NAVIGATION_GOAL[10]) {
 		answer_msg.data = "Выполняю!";
 		_tts_pub.publish(answer_msg);
-		double params[7] = {-1.0, 0, 0, 0, 0, 0, 1};
+		double params[7] = { -1.0, 0, 0, 0, 0, 0, 1 };
 		sendGoalMsg("base_link", params);
-	}	
+	}
 }
 
 #endif // SET_NAVIGATION_GOAL_H_

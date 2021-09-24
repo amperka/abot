@@ -4,8 +4,8 @@
 #include <ros/ros.h>
 #include <std_msgs/String.h>
 #include <string>
+#include <time.h>
 #include <vector>
-#include <time.h> 
 
 const std::vector<std::string> VOICE_COMMANDS_GET_SYSTEM_TIME = {
 	"который час",
@@ -40,6 +40,7 @@ const std::vector<std::string> DAY_OF_A_WEEK_STRINGS = {
 class VCGetSystemTime {
 public:
 	VCGetSystemTime();
+
 private:
 	ros::NodeHandle _node;
 	ros::Subscriber _stt_sub;
@@ -67,7 +68,7 @@ void VCGetSystemTime::grammarCallback(const std_msgs::String::ConstPtr& msg) {
 		tts_string_msg.data = makeTimeString();
 		_tts_pub.publish(tts_string_msg);
 	}
-	if (grammar_string == VOICE_COMMANDS_GET_SYSTEM_TIME[2] || grammar_string == VOICE_COMMANDS_GET_SYSTEM_TIME[3]) { 
+	if (grammar_string == VOICE_COMMANDS_GET_SYSTEM_TIME[2] || grammar_string == VOICE_COMMANDS_GET_SYSTEM_TIME[3]) {
 		getTimeInfo();
 		std_msgs::String tts_string_msg;
 		tts_string_msg.data = makeDateString();
